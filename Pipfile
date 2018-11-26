@@ -9,6 +9,7 @@ verify_ssl = true
 zappa = "*"
 djangorestframework = "*"
 django = "===1.11.16"
+whitenoise = "*"
 
 [requires]
 python_version = "3.6"

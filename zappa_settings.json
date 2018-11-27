@@ -1,6 +1,6 @@
 {
     "dev": {
-        "django_settings": "insurance.settings",
+        "django_settings": "insurance.settings.dev",
         "profile_name": "default",
         "project_name": "britecore-insur",
         "runtime": "python3.6",

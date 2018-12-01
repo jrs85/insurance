@@ -9,3 +9,11 @@ $ pipenv install
 To run flake8 + tests + coverage report:
 
 $ tox
+
+To instantiante the database:
+
+$ python manage.py migrate
+
+Add a super user:
+
+$ python manage.py createsuperuser --email [email] --username [username]

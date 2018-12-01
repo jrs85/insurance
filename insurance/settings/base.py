@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'insurance',
     'polymorphic',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

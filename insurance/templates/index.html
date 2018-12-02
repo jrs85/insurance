@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Insurance App</title>
-    </head>
-    <body>
-        <div id="app">
-          <h1>Risk Types</h1>
-          <p v-if="risk_types.length > 0">Click on a risk type to add a new instance</p>
-          <p v-else>No risk types could be found.</p>
-          <ul>
-            <li v-for="i in risk_types">${ i.name }</li>
-          </ul>
-        </div>
-
-        <script src="https://unpkg.com/vue"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-        <script>
-          new Vue({
-              el: '#app',
-              delimiters: ['${', '}'],
-              data: {
-                risk_types: [],
-              },
-              mounted: function() {
-                this.getRiskTypes();
-              },
-              methods: {
-                saveItem: function() {
-                  this.items.push(this.newItem);
-                  this.newItem = '';
-                },
-                getRiskTypes: function() {
-                  // this.loading = true;
-                  this.$http.get('/api/risk_types/')
-                      .then((response) => {
-                          this.risk_types = response.data;
-                          //this.loading = false;
-                      })
-                      .catch((err) => {
-                         this.loading = false;
-                         console.log(err);
-                      })
-                 },
-              }
-          })
-      </script>
-    </body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Insurance App</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="listing">
+        <h1>Risk Types</h1>
+        <p v-if="risk_types.length > 0">Click on a risk type to add a new instance</p>
+        <p v-else>No risk types could be found.</p>
+        <ul>
+          <li v-for="i in risk_types">${ i.name }</li>
+        </ul>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        delimiters: ['${', '}'],
+        data: {
+          risk_types: [],
+        },
+        mounted: function() {
+          this.getRiskTypes();
+        },
+        methods: {
+          saveItem: function() {
+            this.items.push(this.newItem);
+            this.newItem = '';
+          },
+          getRiskTypes: function() {
+            // this.loading = true;
+            this.$http.get('/api/risk_types/')
+              .then((response) => {
+                this.risk_types = response.data;
+                //this.loading = false;
+              })
+              .catch((err) => {
+                this.loading = false;
+                console.log(err);
+              })
+          },
+        }
+      })
+    </script>
+  </body>
 </html>

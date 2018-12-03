@@ -3,18 +3,52 @@
   <head>
     <meta charset="UTF-8">
     <title>Insurance App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
   <body>
     <div id="app">
       <div id="listing">
         <h1>Risk Types</h1>
-        <p v-if="risk_types.length > 0">Click on a risk type to add a new instance</p>
+        <p v-if="risk_types.length > 0">Click on a risk type to add a new instance:</p>
         <p v-else>No risk types could be found.</p>
         <ul>
-          <li v-for="i in risk_types">${ i.name }</li>
+          <li v-for="i in risk_types">
+            <a href="#" data-toggle="modal" @click="updateNewRiskRiskType(i.id)" data-target="#add-risk">${ i.name }</a>
+          </li>
         </ul>
       </div>
-    </div>
+      <!-- Add Risk Type Modal -->
+      <div class="modal fade" id="add-risk" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add ${ newRiskRiskType.name } risk</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form>
+              <div class="modal-body">
+                  <div v-for="field_type in newRiskRiskType.fields">
+                    <label :for="`new-risk-${ field_type.id }-field`">${ field_type.label }</label>
+                    <input :id="`new-risk-${ field_type.id }-field`" class="form-control" type="text" />
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- End of Add Risk Type Modal -->
+    </div> <!-- End of app -->
+    <!-- Bootstrap deps -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- End of boostrap deps -->
     <script src="https://unpkg.com/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
     <script>
@@ -23,26 +57,33 @@
         delimiters: ['${', '}'],
         data: {
           risk_types: [],
+          risk_types_map: new Map(), 
+          newRiskRiskType: '',
         },
         mounted: function() {
           this.getRiskTypes();
         },
         methods: {
-          saveItem: function() {
-            this.items.push(this.newItem);
-            this.newItem = '';
-          },
           getRiskTypes: function() {
             // this.loading = true;
             this.$http.get('/api/risk_types/')
               .then((response) => {
                 this.risk_types = response.data;
-                //this.loading = false;
+                risk_types_map = new Map();
+                response.data.forEach(function(i) {
+                  risk_types_map.set(i.id, i);
+                });
+                this.risk_types_map = risk_types_map;
+                this.newRiskRiskType = this.risk_types_map.get(4);
+                this.loading = false;
               })
               .catch((err) => {
                 this.loading = false;
                 console.log(err);
               })
+          },
+          updateNewRiskRiskType: function(risk_type_id) {
+            this.newRiskRiskType = this.risk_types_map.get(risk_type_id);
           },
         }
       })

@@ -68,6 +68,13 @@ class NumberField(RiskTypeField):
         return NumberValue(field=self, risk=risk, value=value)
 
 
+class DateField(RiskTypeField):
+    field_type = 'date'
+
+    def new_value_for(self, risk, value):
+        return DateValue(field=self, risk=risk, value=value)
+
+
 class Value(PolymorphicModel):
     field = models.ForeignKey(RiskTypeField, on_delete=models.CASCADE)
     risk = models.ForeignKey(Risk, on_delete=models.CASCADE)
@@ -79,3 +86,7 @@ class TextValue(Value):
 
 class NumberValue(Value):
     value = models.DecimalField(max_digits=15, decimal_places=2)
+
+
+class DateValue(Value):
+    value = models.DateField()

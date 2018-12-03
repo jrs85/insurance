@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 
@@ -6,6 +8,7 @@ from insurance.models import (
     RiskType,
     TextField,
     NumberField,
+    DateField,
 )
 
 
@@ -58,3 +61,20 @@ class RiskTest(TestCase):
         # THEN
         with self.assertRaises(ValidationError):
             risk.set_field_value(field_label='Year', value='str value')
+
+    def test_risk_date_field_values_can_be_set(self):
+        # GIVEN
+        risk_type = RiskType.objects.create(name='painting')
+        DateField.objects.create(
+            risk_type=risk_type, label='Created on', pos=1
+        )
+
+        # WHEN
+        risk = risk_type.new_value()
+        risk.set_field_value(field_label='Created on', value='2010-10-23')
+
+        # THEN
+        new_risk_instance = Risk.objects.get(id=risk.id)
+        self.assertEqual(
+            date(2010, 10, 23), new_risk_instance.fields['Created on']
+        )

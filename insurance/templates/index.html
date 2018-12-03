@@ -31,7 +31,11 @@
               <div class="modal-body">
                   <div v-for="field_type in newRiskRiskType.fields">
                     <label :for="`new-risk-${ field_type.id }-field`">${ field_type.label }</label>
-                    <input :id="`new-risk-${ field_type.id }-field`" class="form-control" type="text" />
+                    <input v-if="field_type.field_type != 'enum'" 
+                           :id="`new-risk-${ field_type.id }-field`"
+                           class="form-control"
+                           :type="`${ field_type.field_type }`"
+                    />
                   </div>
               </div>
               <div class="modal-footer">

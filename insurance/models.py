@@ -23,7 +23,7 @@ class Risk(models.Model):
     risk_type = models.ForeignKey(RiskType, on_delete=models.PROTECT)
 
     def set_field_value(self, field_label, value):
-        fields = self.risk_type.risktypefield_set.all()
+        fields = self.risk_type.fields.all()
         for f in fields:
             if f.label == field_label:
                 v = f.new_value_for(self, value)
@@ -43,15 +43,20 @@ class Risk(models.Model):
 
 
 class RiskTypeField(PolymorphicModel):
-    risk_type = models.ForeignKey(RiskType, on_delete=models.CASCADE)
+    risk_type = models.ForeignKey(
+        RiskType, on_delete=models.CASCADE, related_name='fields'
+    )
     label = models.CharField(max_length=100)
     pos = models.IntegerField()
+    field_type = 'abstract'
 
     def new_value_for(self, risk, value):
         raise NotImplementedError()
 
 
 class TextField(RiskTypeField):
+    field_type = 'text'
+
     def new_value_for(self, risk, value):
         return TextValue(field=self, risk=risk, value=value)
 

@@ -1,4 +1,7 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+
+import jsonfield
 
 from polymorphic.models import PolymorphicModel
 
@@ -75,6 +78,30 @@ class DateField(RiskTypeField):
         return DateValue(field=self, risk=risk, value=value)
 
 
+class EnumField(RiskTypeField):
+    field_type = 'enum'
+    choices = jsonfield.JSONField()
+
+    def new_value_for(self, risk, value):
+        if value not in self.choices:
+            raise ValidationError(
+                f'`{value}` is not a valid choice for the {self.label} '
+                f'EnumField. Available options: {self.choices}'
+            )
+        return EnumValue(field=self, risk=risk, value=value)
+
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+        if not self.choices:
+            raise ValidationError(
+                'The `choices` field must be defined for EnumField'
+            )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+
 class Value(PolymorphicModel):
     field = models.ForeignKey(RiskTypeField, on_delete=models.CASCADE)
     risk = models.ForeignKey(Risk, on_delete=models.CASCADE)
@@ -90,3 +117,7 @@ class NumberValue(Value):
 
 class DateValue(Value):
     value = models.DateField()
+
+
+class EnumValue(Value):
+    value = models.CharField(max_length=100)

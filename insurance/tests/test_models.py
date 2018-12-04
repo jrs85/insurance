@@ -9,15 +9,29 @@ from insurance.models import (
     TextField,
     NumberField,
     DateField,
+    EnumField,
 )
 
 
 class RiskTypeTest(TestCase):
     def test_fields_can_be_added_to_a_risk_type(self):
-        car = RiskType(name='car')
-        car.save()
-        brand_field = TextField(risk_type=car, label='Brand', pos=1)
-        brand_field.save()
+        car = RiskType.objects.create(name='car')
+        TextField.objects.create(risk_type=car, label='Brand', pos=1)
+        NumberField.objects.create(risk_type=car, label='Year', pos=2)
+        DateField.objects.create(risk_type=car, label='Release Date', pos=3)
+        fuel_types = ['Gasoline', 'Diesel', 'Ethanol']
+        EnumField.objects.create(
+            risk_type=car, label='Fueled By', pos=4, choices=fuel_types
+        )
+
+
+class RiskTypeFieldTest(TestCase):
+    def test_enum_field_choices_must_be_specified(self):
+        risk_type = RiskType.objects.create(name='car')
+        with self.assertRaises(ValidationError):
+            EnumField.objects.create(
+                risk_type=risk_type, label='Fuel', pos=1
+            )
 
 
 class RiskTest(TestCase):
@@ -78,3 +92,38 @@ class RiskTest(TestCase):
         self.assertEqual(
             date(2010, 10, 23), new_risk_instance.fields['Created on']
         )
+
+    def test_risk_enum_field_values_can_be_set(self):
+        # GIVEN
+        risk_type = RiskType.objects.create(name='car')
+        EnumField.objects.create(
+            risk_type=risk_type,
+            label='Fuel',
+            pos=1,
+            choices=['Gasoline', 'Diesel'],
+        )
+
+        # WHEN
+        risk = risk_type.new_value()
+        risk.set_field_value(field_label='Fuel', value='Gasoline')
+
+        # THEN
+        new_risk_instance = Risk.objects.get(id=risk.id)
+        self.assertEqual(
+            'Gasoline', new_risk_instance.fields['Fuel']
+        )
+
+    def test_risk_enum_field_value_must_be_a_valid_choice(self):
+        # GIVEN
+        risk_type = RiskType.objects.create(name='car')
+        EnumField.objects.create(
+            risk_type=risk_type,
+            label='Fuel',
+            pos=1,
+            choices=['Gasoline', 'Diesel'],
+        )
+
+        # WHEN
+        risk = risk_type.new_value()
+        with self.assertRaises(ValidationError):  # THEN
+            risk.set_field_value(field_label='Fuel', value='Hydrogen')

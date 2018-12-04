@@ -15,6 +15,7 @@ djangorestframework = "*"
 django = "===1.11.16"
 whitenoise = "*"
 django-polymorphic = "*"
+django-jsonfield = "*"
 
 [requires]
 python_version = "3.6"

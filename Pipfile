@@ -17,6 +17,7 @@ whitenoise = "*"
 django-polymorphic = "*"
 django-jsonfield = "*"
 django-rest-polymorphic = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.6"

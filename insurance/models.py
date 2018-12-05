@@ -21,6 +21,9 @@ class RiskType(models.Model):
         r.save()
         return r
 
+    def __str__(self):
+        return self.name
+
 
 class Risk(models.Model):
     risk_type = models.ForeignKey(RiskType, on_delete=models.PROTECT)

@@ -37,3 +37,21 @@ class RiskTypeApiTests(APITestCase):
         self.assertTrue(1, brand['pos'])
         self.assertTrue('text', brand['field_type'])
         self.assertTrue('id' in brand)
+
+    def test_serialized_enum_fields_contain_the_choices(self):
+        # GIVEN a risk type with 2 fields
+        risk_type = models.RiskType.objects.create(name='car')
+        models.EnumField.objects.create(
+            risk_type=risk_type,
+            label='Fuel',
+            pos=1,
+            choices=['Gasoline', 'Diesel'],
+        )
+
+        # WHEN
+        url = reverse('risktype-detail', args=[risk_type.id])
+        response = self.client.get(url, format='json').json()
+        api_field = response['fields'][0]
+        self.assertTrue('Gasoline' in api_field['choices'])
+        self.assertTrue('id' in api_field)
+        self.assertEqual('Fuel', api_field['label'])

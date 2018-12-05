@@ -1,19 +1,25 @@
 # Insurance app
 
-### Local development
+### Local development setup
 
-To create a virtual environment and install the dependencies:
+1. Create the virtual environment and install the dependencies:
 
-$ pipenv install
+$ pipenv install --dev
 
-To run flake8 + tests + coverage report:
+2. Start the development postgresql database
 
-$ tox
+$ docker-compose up
 
-To instantiante the database:
+Notes: it runs on port 5432. The data is stored in .postgres_data.
+
+3. Populate the database:
 
 $ python manage.py migrate
 
-Add a super user:
+4. Add a super user:
 
 $ python manage.py createsuperuser --email [email] --username [username]
+
+5. Run flake8 + tests + coverage report:
+
+$ tox

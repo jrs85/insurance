@@ -18,6 +18,7 @@ django-polymorphic = "*"
 django-jsonfield = "*"
 django-rest-polymorphic = "*"
 psycopg2 = "*"
+zappa-django-utils = "*"
 
 [requires]
 python_version = "3.6"

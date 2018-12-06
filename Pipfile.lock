@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "47ee52b13d72b67a24a7fdbc5c4308ac47142dbcefae570d58461e190edd382c"
+            "sha256": "0bff3b92ad7de224790b7be79a219fadd5f4f52c4d5c18c43a79f6e3e836bbd2"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -329,6 +329,14 @@
             ],
             "index": "pypi",
             "version": "==0.47.1"
+        },
+        "zappa-django-utils": {
+            "hashes": [
+                "sha256:8c624f81329453ebf5785e502a08b0a63d26c90148c93a12d3a8f34e213cbef8",
+                "sha256:9d6d14b8cf4184c025f224d34657d56986de2f6bbde48573efd264daa92046a5"
+            ],
+            "index": "pypi",
+            "version": "==0.4.0"
         }
     },
     "develop": {

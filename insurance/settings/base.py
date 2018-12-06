@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'insurance',
     'polymorphic',
     'rest_framework',
+    'zappa_django_utils',
 ]
 
 MIDDLEWARE = [

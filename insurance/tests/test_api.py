@@ -70,7 +70,7 @@ class RiskTypeApiTests(APITestCase):
         brand = response['fields'][0]
         self.assertTrue('Brand', brand['label'])
         self.assertTrue(1, brand['pos'])
-        self.assertTrue('text', brand['field_type'])
+        self.assertTrue('TextField', brand['resourcetype'])
         self.assertTrue('id' in brand)
 
     def test_serialized_enum_fields_contain_the_choices(self):

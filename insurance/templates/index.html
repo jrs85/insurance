@@ -31,10 +31,10 @@
               <div class="modal-body">
                   <div v-for="field_type in newRiskRiskType.fields">
                     <label :for="`new-risk-${ field_type.id }-field`">${ field_type.label }</label>
-                    <input v-if="field_type.field_type != 'enum'" 
+                    <input v-if="field_type.resourcetype != 'EnumField'" 
                            :id="`new-risk-${ field_type.id }-field`"
                            class="form-control"
-                           :type="`${ field_type.field_type }`"
+                           :type="`${ field_type.resourcetype.toLowerCase().replace('field', '') }`"
                     />
                     <select v-else class="form-control" :id="`new-risk-${ field_type.id }-field`">
                       <option disabled selected value> -- select an option -- </option>

@@ -54,7 +54,6 @@ class RiskTypeField(PolymorphicModel):
     )
     label = models.CharField(max_length=100)
     pos = models.IntegerField()
-    field_type = 'abstract'
 
     def new_value_for(self, risk, value):
         raise NotImplementedError()
@@ -64,28 +63,21 @@ class RiskTypeField(PolymorphicModel):
 
 
 class TextField(RiskTypeField):
-    field_type = 'text'
-
     def new_value_for(self, risk, value):
         return TextValue(field=self, risk=risk, value=value)
 
 
 class NumberField(RiskTypeField):
-    field_type = 'number'
-
     def new_value_for(self, risk, value):
         return NumberValue(field=self, risk=risk, value=value)
 
 
 class DateField(RiskTypeField):
-    field_type = 'date'
-
     def new_value_for(self, risk, value):
         return DateValue(field=self, risk=risk, value=value)
 
 
 class EnumField(RiskTypeField):
-    field_type = 'enum'
     choices = jsonfield.JSONField()
 
     def new_value_for(self, risk, value):

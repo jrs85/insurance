@@ -14,13 +14,13 @@ from rest_polymorphic.serializers import PolymorphicSerializer
 class RiskTypeFieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = RiskTypeField
-        fields = ('id', 'label', 'pos', 'field_type')
+        fields = ('id', 'label', 'pos')
 
 
 class EnumFieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = EnumField
-        fields = ('id', 'label', 'pos', 'field_type', 'choices')
+        fields = ('id', 'label', 'pos', 'choices')
 
 
 class RiskTypeFieldPolymorphicSerializer(PolymorphicSerializer):

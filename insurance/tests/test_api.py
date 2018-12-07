@@ -7,11 +7,46 @@ from insurance import models
 class RiskTypeApiTests(APITestCase):
     def test_create_risk_type(self):
         url = reverse('risktype-list')
-        data = {'name': 'Car'}
+        data = {'name': 'Car', 'fields': []}
         response = self.client.post(url, data, format='json')
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(1, models.RiskType.objects.count())
         self.assertEqual('Car', models.RiskType.objects.get().name)
+
+    def test_create_risk_type_with_fields(self):
+        url = reverse('risktype-list')
+        data = {
+            'name': 'Car',
+            'fields': [{
+                'label': 'text field',
+                'pos': 1,
+                'resourcetype': 'TextField',
+            }, {
+                'label': 'date field',
+                'pos': 2,
+                'resourcetype': 'DateField',
+            }, {
+                'label': 'number field',
+                'pos': 3,
+                'resourcetype': 'NumberField',
+            }, {
+                'label': 'enum field',
+                'pos': 4,
+                'resourcetype': 'EnumField',
+                'choices': ['choice 1', 'choice 2'],
+            }]
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(
+            status.HTTP_201_CREATED, response.status_code, response.json()
+        )
+        response_data = response.json()
+        self.assertEqual('Car', response_data['name'])
+        self.assertEqual(4, len(response_data['fields']))
+        self.assertEqual(
+            ['TextField', 'DateField', 'NumberField', 'EnumField'],
+            [f['resourcetype'] for f in response_data['fields']]
+        )
 
     def test_get_risk_type_fields(self):
         # GIVEN a risk type with 2 fields

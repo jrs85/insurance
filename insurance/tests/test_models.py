@@ -10,6 +10,7 @@ from insurance.models import (
     NumberField,
     DateField,
     EnumField,
+    UnknownField
 )
 
 
@@ -127,3 +128,14 @@ class RiskTest(TestCase):
         risk = risk_type.new_value()
         with self.assertRaises(ValidationError):  # THEN
             risk.set_field_value(field_label='Fuel', value='Hydrogen')
+
+    def test_raises_exception_setting_values_for_unknown_field(self):
+        # GIVEN
+        risk_type = RiskType.objects.create(name='car')
+
+        # WHEN
+        risk = risk_type.new_value()
+
+        # THEN
+        with self.assertRaises(UnknownField):
+            risk.set_field_value(field_label='not a field', value='')

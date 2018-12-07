@@ -1,0 +1,29 @@
+{
+  "name": "Car",
+  "fields": [
+    {
+      "label": "Description",
+      "pos": 1,
+      "resourcetype": "TextField"
+    },
+    {
+      "label": "Date of Acquisition",
+      "pos": 2,
+      "resourcetype": "DateField"
+    },
+    {
+      "label": "Model Year",
+      "pos": 3,
+      "resourcetype": "NumberField"
+    },
+    {
+      "label": "Fuel Type",
+      "pos": 4,
+      "resourcetype": "EnumField",
+      "choices": [
+        "Gasoline",
+        "Diesel"
+      ]
+    }
+  ]
+}

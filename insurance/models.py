@@ -59,6 +59,9 @@ class RiskTypeField(PolymorphicModel):
     def new_value_for(self, risk, value):
         raise NotImplementedError()
 
+    def __str__(self):
+        return self.label
+
 
 class TextField(RiskTypeField):
     field_type = 'text'

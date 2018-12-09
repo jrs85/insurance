@@ -13,8 +13,7 @@
   * insurance/views.py
   * insurance/tests/test_api.py
 6. Same as item 5
-7. index.html
-  7.1 You need to click on an risk type to display the form
+7. index.html(you need to click on an risk type to display the form)
 8. Very basic implementation, not using Vue components
 9. Via e-mail
 10. quiz.py

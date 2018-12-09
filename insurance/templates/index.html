@@ -75,7 +75,7 @@
         },
         methods: {
           getRiskTypes: function() {
-            this.$http.get('/api/risk_types/')
+            this.$http.get('api/risk_types/')
               .then((response) => {
                 this.risk_types = response.data;
                 risk_types_map = new Map();

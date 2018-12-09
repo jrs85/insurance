@@ -1,5 +1,13 @@
 # Insurance app
 
+## Using the deployed app
+
+### Adding a new risk type
+
+Access the /api/risk_types/ endpoint.
+There you can use the raw data tab to post a new risk type. One example of
+valid risk type is provided in the `sample_risk_type.json` file in this repository.
+
 ## Local development setup
 
 ### 1. Create the virtual environment and install the dependencies:
@@ -24,6 +32,15 @@ $ python manage.py createsuperuser --email [email] --username [username]
 
 $ tox
 
+## Deploying changes to AWS
+
+### Updating the code
+
+$ zappa update [env]
+
+### Running migrations
+
+$ zappa manage [env] migrate
 
 ## AWS Setup (for new deployments)
 

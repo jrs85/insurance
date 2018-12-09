@@ -75,7 +75,6 @@
         },
         methods: {
           getRiskTypes: function() {
-            // this.loading = true;
             this.$http.get('/api/risk_types/')
               .then((response) => {
                 this.risk_types = response.data;
@@ -84,7 +83,6 @@
                   risk_types_map.set(i.id, i);
                 });
                 this.risk_types_map = risk_types_map;
-                this.newRiskRiskType = this.risk_types_map.get(4);
                 this.loading = false;
               })
               .catch((err) => {

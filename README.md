@@ -9,9 +9,9 @@
 3. insurance/models.py and insurance/tests/test_models.py
 4. er-diagram.png
 5. Using django-rest-framework:
-  5.1 insurance/serializers.py
-  5.2 insurance/views.py
-  5.3 insurance/tests/test_api.py
+  * insurance/serializers.py
+  * insurance/views.py
+  * insurance/tests/test_api.py
 6. Same as item 5
 7. index.html
   7.1 You need to click on an risk type to display the form

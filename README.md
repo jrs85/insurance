@@ -1,5 +1,26 @@
 # Insurance app
 
+## For the evaluators
+
+### The deliverables (in this repo):
+
+1. This README
+2. Via e-mail
+3. insurance/models.py and insurance/tests/test_models.py
+4. er-diagram.png
+5. Using django-rest-framework:
+  5.1 insurance/serializers.py
+  5.2 insurance/views.py
+  5.3 insurance/tests/test_api.py
+6. Same as item 5
+7. index.html
+  7.1 You need to click on an risk type to display the form
+8. Very basic implementation, not using Vue components
+9. Via e-mail
+10. quiz.py
+11. Same as item 2?
+12. Via e-mail
+
 ## Using the deployed app
 
 ### Adding a new risk type
@@ -82,4 +103,3 @@ $ zappa manage [env] migrate
 ### 9. Create super user
 
 $ zappa manage dev create_admin_user
-

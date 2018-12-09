@@ -13,8 +13,9 @@
   * insurance/views.py
   * insurance/tests/test_api.py
 6. Same as item 5
-7. index.html(you need to click on an risk type to display the form)
-8. Very basic implementation, not using Vue components
+7. index.html (you need to click on an risk type to display the form)
+8. Very basic implementation, not using Vue components. I added models for 
+storing the risks, but the app isn't handling form submissions.
 9. Via e-mail
 10. quiz.py
 11. Same as item 2?

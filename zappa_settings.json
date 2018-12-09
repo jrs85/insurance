@@ -5,6 +5,10 @@
         "project_name": "britecore-insur",
         "runtime": "python3.6",
         "s3_bucket": "britecore-application-20181125",
-        "aws_region": "us-east-1"
+        "aws_region": "us-east-1",
+        "vpc_config" : {
+            "SubnetIds": [],
+            "SecurityGroupIds": []
+        }
     }
 }
